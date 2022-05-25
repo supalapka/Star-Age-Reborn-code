@@ -8,30 +8,29 @@ public class Explode : MonoBehaviour
     public GameObject Explosion;
 
 
-    IEnumerator OnTriggerEnter(Collider other) 
+    void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player")) //if miner are in player 
         {
             Explosion.transform.position = Miner.transform.position;
             Explosion.gameObject.SetActive(true);
-
-            Debug.Log("wait (0.4 second");
-            yield return new WaitForSeconds(0.4f); //explosing
-            Debug.Log("time had pass (0.4 second...");
-
-            Miner.gameObject.SetActive(false);
+            //   yield return new WaitForSeconds(0.45f); //explosing
+            Invoke("MinerOff", .45f);  // destroy miner after 0.4 sec after explosion
             PlayersOnMap.DamagePlayer(other.name, 110);
-            Debug.Log("wait 0.6 second");
-            yield return new WaitForSeconds(0.6f); //explosing
-            Debug.Log("time had pass 0.6 second...");
 
-            Explosion.gameObject.SetActive(false);
-
-            Debug.Log("wait 3 second");
-            yield return new WaitForSeconds(3f); //explosing
-            Debug.Log("time had pass 3 second...");
-
+            Invoke("ExplosionOff", .6f);  //destroy explosion after its done
         }
+    }
+
+    private void MinerOff()
+    {
+        Miner.gameObject.SetActive(false);
+
+    }
+
+    private void ExplosionOff()
+    {
+        Explosion.gameObject.SetActive(false);
     }
 
 

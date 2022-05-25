@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
     public string Name { get; set; }
     private int maxHealth = Core.spaceship.MaxHP;
     private int currentHealth = Core.spaceship.MaxHP;
-    private int maxExp = 100; // temp
+    private int maxExp = 60; // temp
     private int currentExp = 0; //temp
 
     public HealthBar HP_Bar;

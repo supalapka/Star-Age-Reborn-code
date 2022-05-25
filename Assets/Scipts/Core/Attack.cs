@@ -46,7 +46,8 @@ public class Attack : MonoBehaviour
                 lineRenderer.gameObject.SetActive(true);
 
                 yield return new WaitForSeconds(1.2f); //shooting for 1.2 sec
-                MinersOnMap.Damage(minerIndex, name, 29);
+                string AttackerName = transform.parent.name;
+                MinersOnMap.Damage(minerIndex, AttackerName, 29);
 
                 lineRenderer.gameObject.SetActive(false);
                 isShooting = false;

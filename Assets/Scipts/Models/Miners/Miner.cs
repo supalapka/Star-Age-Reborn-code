@@ -34,7 +34,6 @@ namespace Assets.Scipts.Models.Miners
         public void Damage(string damagedBy, int dmg)
         {
             CurrentHealth -= dmg;
-            Debug.Log(CurrentHealth);
             if (CurrentHealth <=0)
             {
                 destroy();
@@ -44,9 +43,8 @@ namespace Assets.Scipts.Models.Miners
         private void destroy()
         {
             minerGameObject.transform.position = new Vector3(0, 5000, 0);
-            System.Threading.Thread.Sleep(200);
-            minerGameObject.SetActive(false);
             MinersOnMap.RemoveMiner(this);
+            minerGameObject.SetActive(false);
         }
 
         public void  Follow(Vector3 targetPosition)
