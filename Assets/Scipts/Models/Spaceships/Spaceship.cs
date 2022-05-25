@@ -11,6 +11,9 @@ namespace Assets.Scipts.Models.Spaceships
     {
         public readonly string Name;
 
+        public readonly int MaxHP;
+        public readonly int CurrentHP;
+
         public readonly int EngineWidth;
         public readonly int EngineHeight;
 
@@ -26,20 +29,25 @@ namespace Assets.Scipts.Models.Spaceships
         // public List<Weapon> Weapon;
 
         public Spaceship(string name,
+            int hp,
             int engineWidth,
             int engineHeight,
             int weaponHeight,
             int weaponWidth,
             int weaponCount,
-            int engineCount)
+            int engineCount,
+            int inventorySize)
         {
             Name = name;
+            MaxHP = hp;
+            CurrentHP = hp;
             EngineWidth = engineWidth;
             EngineHeight = engineHeight;
             WeaponWidth = weaponWidth;
             WeaponHeight = weaponHeight;
             WeaponCount = weaponCount;
             EngineCount = engineCount;
+            InventorySize = inventorySize;
         }
 
     }

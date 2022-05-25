@@ -8,11 +8,13 @@ using UnityEngine;
 public static class Core
 {
     public static Spaceship spaceship = new Corsar();
+    public static bool isInited = false;
     public static void Init()
     {
-        Engine tesla = new Core1();
+        Engine tesla = new Tesla();
         spaceship.Engines.Add(tesla);
-        
+        isInited = true;
+
     }
     
 }

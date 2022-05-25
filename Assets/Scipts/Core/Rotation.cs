@@ -1,9 +1,11 @@
-using Assets.Scipts.Model;
+using System.Linq;
 using UnityEngine;
 
 public class Rotation : MonoBehaviour
 {
-    public float rotateSpeed = 0;
+    public Transform coreTransform;
+    private float rotateSpeed;
+    public float rotateSpeedVisualEffect = 30f;
     Quaternion rotation;
     public Animator animator;
     private float startedRotationAngleZ;
@@ -11,61 +13,79 @@ public class Rotation : MonoBehaviour
     Vector3 mousePosition;
     Vector2 direction;
     float angle;
+    Quaternion rotationVisualEffect;
+
+
     void Start()
     {
-        foreach (var engine in Core.spaceship.Engines)
-            rotateSpeed += engine.RotationSpeed;
+        if (!Core.isInited)
+            Core.Init();
+        rotateSpeed += Core.spaceship.Engines.ElementAt(0).RotationSpeed;
     }
 
+
+    //REPLACE ROTATION CHANGES HERE INSTEAD OF ANIMATION!!!
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
             isTurning = true;
-            animator.SetFloat("speed", 1f);
+            startedRotationAngleZ = coreTransform.rotation.z; //save current z angle for identificate turn side
+            //   animator.SetFloat("speed", 1f);
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            direction = mousePosition - transform.position;
+            direction = mousePosition - coreTransform.position;
 
             angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-            startedRotationAngleZ = transform.rotation.z; //save current z angle for identificate turn side
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotateSpeed * Time.deltaTime); //make one move for get difference in z axis
-
-
-            if (startedRotationAngleZ > transform.rotation.z) // identificate turn side
-            { //turning right
-                animator.SetBool("isTurningRight", true);
-                animator.SetBool("isTurningLeft", false);
-            }
-            else
-            {//turning left
-                animator.SetBool("isTurningLeft", true);
-                animator.SetBool("isTurningRight", false);
-            }
-            animator.SetBool("isReadyToDefault", false);
+            coreTransform.rotation = Quaternion.RotateTowards(coreTransform.rotation, rotation, rotateSpeed * Time.deltaTime); //make one move for get difference in z axis
         }
 
         if (isTurning)
         {
-            direction = mousePosition - transform.position;
+            direction = mousePosition - coreTransform.position; 
             angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        }
 
-        if (transform.rotation != rotation)
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
+            coreTransform.rotation = Quaternion.RotateTowards(coreTransform.rotation, rotation, rotateSpeed * Time.deltaTime);
+
+
+            if (startedRotationAngleZ > coreTransform.rotation.z) // identificate turn side
+            { //turning right
+                rotationVisualEffect = Quaternion.AngleAxis(45, Vector3.right);
+                //coreTransform.rotation = Quaternion.RotateTowards(transform.rotation, rotationVisualEffect,
+                //    rotateSpeedVisualEffect * Time.deltaTime); 
+                // animator.SetBool("isTurningRight", true);
+                //  animator.SetBool("isTurningLeft", false);
+            }
+            else
+            {//turning left
+                rotationVisualEffect = Quaternion.AngleAxis(45, Vector3.left);
+                //coreTransform.rotation = Quaternion.RotateTowards(transform.rotation, rotationVisualEffect,
+                //    rotateSpeedVisualEffect * Time.deltaTime);
+                //  animator.SetBool("isTurningLeft", true);
+                //  animator.SetBool("isTurningRight", false);
+            }
+            // animator.SetBool("isReadyToDefault", false);
+        }
         else
         {
-            animator.SetBool("isReadyToDefault", true);
-            animator.SetBool("isTurningLeft", false);
-            animator.SetBool("isTurningRight", false);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotationVisualEffect,
+                   rotateSpeedVisualEffect * Time.deltaTime);  //rotate to 0    
+        }
+
+        if (coreTransform.rotation == rotation)
+        {
+            isTurning = false;
+            // animator.SetBool("isReadyToDefault", true);
+            // animator.SetBool("isTurningLeft", false);
+            // animator.SetBool("isTurningRight", false);
         }
 
         if (Input.GetKeyDown(KeyCode.S)) //stop moving
         {
-            rotation = transform.rotation;
-            animator.SetFloat("speed", -1f);
+            rotation = coreTransform.rotation;
+            //  animator.SetFloat("speed", -1f);
         }
     }
 

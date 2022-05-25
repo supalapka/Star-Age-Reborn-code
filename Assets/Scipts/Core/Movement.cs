@@ -1,29 +1,29 @@
-using Assets.Scipts.Model;
-using Assets.Scipts.Models.Spaceships;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    public Transform coreTransform;
     private float moveSpeed = 0;
     public List<GameObject> flames;
     [SerializeField] private Collider targetCollider;
     private Vector3 target;
     void Start()
     {
-        Core.Init();
-        target = transform.position;
-            foreach (var engine in Core.spaceship.Engines)
-                moveSpeed += engine.MoveSpeed;
+        if (!Core.isInited)
+            Core.Init();
+        target = coreTransform.transform.position;
+        foreach (var engine in Core.spaceship.Engines)
+            moveSpeed += engine.MoveSpeed;
     }
 
     void Update()
     {
-      
+
         if (Input.GetMouseButtonDown(0))
         {
             target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            target.z = transform.position.z;
+            target.z = coreTransform.transform.position.z;
             targetCollider.transform.position = target;
 
             foreach (var flame in flames)
@@ -32,8 +32,8 @@ public class Movement : MonoBehaviour
             }
         }
 
-        if (target != transform.position)
-            transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
+        if (target != coreTransform.transform.position)
+            coreTransform.transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
         else
             foreach (var flame in flames)
             {
@@ -42,15 +42,16 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.S)) //stop moving
         {
-            target = transform.position;
+            target = coreTransform.transform.position;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other == targetCollider)
-            target = transform.position;
+        if (other == targetCollider) 
+        {
+            target = coreTransform.transform.position;
+        }
     }
-
 
 }

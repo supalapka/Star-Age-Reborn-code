@@ -2,7 +2,7 @@
 {
     public class Core1 : Engine
     {
-        public Core1() : base("Core-1", 1.3f, 50f, 2, 3, 700, 1)
+        public Core1() : base("Core-1", 1.3f, 99f, 2, 3, 700, 1)
         {
 
         }
