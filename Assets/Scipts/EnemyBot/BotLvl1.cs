@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BotLvl1 : MonoBehaviour
 {
+    public HealthBar healthBar;
     private Transform target;
     public GameObject thisBot;
     private Vector3 vectorWithNoZ;
@@ -16,12 +17,15 @@ public class BotLvl1 : MonoBehaviour
 
     void Start()
     {
-        Miner miner = new Miner();
+        Miner miner = new Miner(healthBar);
         miner.Id = thisBot.name;
         miner.transform = thisBot.transform; //EnemyLVL1
         miner.minerGameObject = thisBot;
+        miner.healthBar = this.healthBar;
         MinersOnMap.Miners.Add(miner);
+
         target = thisBot.transform;
+
     }
 
     void Update()

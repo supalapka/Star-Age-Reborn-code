@@ -10,6 +10,7 @@ namespace Assets.Scipts.Models.Miners
 {
     public class Miner
     {
+        public HealthBar healthBar;
         public string Id { get; set; }
         public GameObject minerGameObject;
         public int MaxHealth { get; set; }
@@ -20,9 +21,12 @@ namespace Assets.Scipts.Models.Miners
         public bool canFollow = false;
 
 
-        public Miner()
+        public Miner(HealthBar healthBar)
         {
-            SetMaxHealth(100);
+            MaxHealth = 100;
+            SetMaxHealth(MaxHealth);
+            HealthBar = healthBar;
+            healthBar.SetMaxHealth(MaxHealth);
         }
 
         public void SetMaxHealth(int h)
@@ -34,6 +38,7 @@ namespace Assets.Scipts.Models.Miners
         public void Damage(string damagedBy, int dmg)
         {
             CurrentHealth -= dmg;
+            healthBar.SetHealth(CurrentHealth);
             if (CurrentHealth <=0)
             {
                 destroy();

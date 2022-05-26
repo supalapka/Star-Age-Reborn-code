@@ -36,10 +36,10 @@ public class Attack : MonoBehaviour
         {
             if (readyToShoot)
             {
-                if (minerIndex == -1)
-                {
-                    minerIndex = MinersOnMap.GetMinerId(other.transform.parent.name); //name: EnemyLVL1
-                }
+
+                minerIndex = MinersOnMap.GetMinerId(other.transform.parent.name); //name: EnemyLVL1
+                var saveIndex = minerIndex;//save if allready shooted but core is out of attack range and miner index sets -1
+
                 readyToShoot = false;
                 isShooting = true;
                 target = other.transform;
@@ -47,7 +47,7 @@ public class Attack : MonoBehaviour
 
                 yield return new WaitForSeconds(1.2f); //shooting for 1.2 sec
                 string AttackerName = transform.parent.name;
-                MinersOnMap.Damage(minerIndex, AttackerName, 29);
+                MinersOnMap.Damage(saveIndex, AttackerName, 29);
 
                 lineRenderer.gameObject.SetActive(false);
                 isShooting = false;
