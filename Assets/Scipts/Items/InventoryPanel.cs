@@ -8,19 +8,37 @@ namespace Assets.Scipts.Items
     {
         [SerializeField] Inventory Inventory;
         [SerializeField] RectTransform ItemsPanel;
+        [SerializeField] RectTransform SlotViewPanel;
 
         public void Start()
         {
-            Redraw();
+            DrawSlots();
+            RedrawInventory();
         }
 
-        void Redraw()
+        public void Update()
         {
-            foreach (var item in Inventory.GetInventory())
+            if (Input.GetKeyDown(KeyCode.E)) //stop moving
             {
-                var icon = new GameObject("icon");
+                var item = GameInventoryItems.AllItems[0];
+                var icon = new GameObject("SlotBox");
                 icon.AddComponent<Image>().sprite = item.Image;
                 icon.transform.SetParent(ItemsPanel);
+            }
+        }
+
+        void RedrawInventory()
+        {
+           
+        }
+
+        void DrawSlots()
+        {
+            foreach (var item in Inventory.GetSlotsBoxes())
+            {
+                var icon = new GameObject("SlotBox");
+                icon.AddComponent<Image>().sprite = item.Image;
+                icon.transform.SetParent(SlotViewPanel);
                 icon.transform.localScale = new Vector3(1, 1, 1); //reset scale cause its breaks
             }
         }

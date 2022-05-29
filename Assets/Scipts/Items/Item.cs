@@ -11,5 +11,4 @@ public class Item : ScriptableObject
     public int Width;
     public int Height;
 
-
 }
