@@ -12,7 +12,7 @@ namespace Assets.Scipts.Items
 
         public void Start()
         {
-            DrawSlots();
+            DrawSlots(); //just slots where to contain items
             RedrawInventory();
         }
 
@@ -32,7 +32,7 @@ namespace Assets.Scipts.Items
            
         }
 
-        void DrawSlots()
+        void DrawSlots() //just slots where to contain items
         {
             foreach (var item in Inventory.GetSlotsBoxes())
             {

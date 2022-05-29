@@ -15,14 +15,22 @@ public class PickUpItem : MonoBehaviour
             ItemName = other.name;
             IsPickingUpItem = true;
         }
-        else if(!other.CompareTag("Player")) //dont set picking up to false if player here
+        
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Item"))
+        {
             IsPickingUpItem = false;
+        }
     }
 
     public static void PickUp()
     {
-        ItemsOnMap.PickUp(ItemName);
+        ItemsOnMap.Remove(ItemName);
         var item = GameObject.Find(ItemName);
+        Debug.Log("picked up " + item.name);
         Destroy(item);
     }
 }

@@ -15,7 +15,6 @@ public class Player : MonoBehaviour
     public void Start()
     {
         Name = GetComponentInChildren<Collider>().name;
-        Debug.Log(Name);
         Exp_Bar.SetExp(currentExp);
         PlayersOnMap.Players.Add(this);
     }

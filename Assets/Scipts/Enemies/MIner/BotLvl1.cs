@@ -1,3 +1,4 @@
+using Assets;
 using Assets.Scipts.Models.Miners;
 using UnityEngine;
 
@@ -62,9 +63,10 @@ public class BotLvl1 : MonoBehaviour
 
     public static void DropItemsAfterDeath(GameObject drop, Vector3 position)
     {
-        drop.transform.localScale = new Vector3(0.071922f, 0.071922f, 0.071922f);
         Quaternion rotation = Quaternion.identity;
+        ItemsOnMap.Add(drop);
         Instantiate(drop, position, rotation);
+
     }
 
 }
