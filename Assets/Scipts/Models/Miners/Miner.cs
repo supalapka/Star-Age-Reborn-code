@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scipts.Models.Miners
 {
-    public class Miner
+    public abstract class Miner
     {
         public HealthBar healthBar;
         public string Id { get; set; }
@@ -19,15 +14,7 @@ namespace Assets.Scipts.Models.Miners
         float moveSpeed = 0.4f;
         public HealthBar HealthBar { get; set; } //remove
         public bool canFollow = false;
-
-
-        public Miner(HealthBar healthBar)
-        {
-            MaxHealth = 100;
-            SetMaxHealth(MaxHealth);
-            HealthBar = healthBar;
-            healthBar.SetMaxHealth(MaxHealth);
-        }
+        protected List<Item> dropItems = new List<Item>();
 
         public void SetMaxHealth(int h)
         {
@@ -39,7 +26,7 @@ namespace Assets.Scipts.Models.Miners
         {
             CurrentHealth -= dmg;
             healthBar.SetHealth(CurrentHealth);
-            if (CurrentHealth <=0)
+            if (CurrentHealth <= 0)
             {
                 destroy();
                 PlayersOnMap.AddExpToPlayer(damagedBy, 10);
@@ -47,12 +34,33 @@ namespace Assets.Scipts.Models.Miners
         }
         private void destroy()
         {
+            var saveMinerPosition = minerGameObject.transform.position;
             minerGameObject.transform.position = new Vector3(0, 5000, 0);
             MinersOnMap.RemoveMiner(this);
+
+            //drop settings
+            var drop = new GameObject();
+
+            //box collider for drop
+            BoxCollider boxCollider = drop.AddComponent<BoxCollider>();
+            boxCollider.isTrigger = true;
+            boxCollider.size = new Vector3(5f, 5f, 5f); 
+            drop.tag = "Item";
+
+            //rigid body for drop
+            Rigidbody dropRB = drop.AddComponent<Rigidbody>();
+            dropRB.useGravity = false;
+
+            //image for drop
+            SpriteRenderer renderer = drop.AddComponent<SpriteRenderer>();
+            renderer.sprite = dropItems[0].Image;
+
+            BotLvl1.DropItemsAfterDeath(drop, saveMinerPosition);
             minerGameObject.SetActive(false);
+
         }
 
-        public void  Follow(Vector3 targetPosition)
+        public void Follow(Vector3 targetPosition)
         {
             transform.position = Vector3.MoveTowards(transform.position,
                 targetPosition, moveSpeed * Time.deltaTime);

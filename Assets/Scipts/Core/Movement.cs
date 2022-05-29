@@ -51,6 +51,11 @@ public class Movement : MonoBehaviour
         if (other == targetCollider) 
         {
             target = coreTransform.transform.position;
+            if(PickUpItem.IsPickingUpItem == true)
+            {
+                Debug.Log("picking up item");
+                PickUpItem.PickUp();
+            }
         }
     }
 
