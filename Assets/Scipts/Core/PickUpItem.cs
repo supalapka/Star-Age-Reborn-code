@@ -1,4 +1,5 @@
 using Assets;
+using Assets.Scipts.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,6 @@ public class PickUpItem : MonoBehaviour
             ItemName = other.name;
             IsPickingUpItem = true;
         }
-        
     }
 
     public void OnTriggerExit(Collider other)
@@ -31,6 +31,7 @@ public class PickUpItem : MonoBehaviour
         ItemsOnMap.Remove(ItemName);
         var item = GameObject.Find(ItemName);
         Debug.Log("picked up " + item.name);
+        InventoryPanel.AddItem(item);
         Destroy(item);
     }
 }

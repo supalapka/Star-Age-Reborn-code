@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scipts
 {
@@ -10,9 +8,13 @@ namespace Assets.Scipts
     {
         public static List<Player> Players = new List<Player>();
 
+        public static Player GetPlayer(string name) { return Players.Where(x => x.Name == name).FirstOrDefault(); }
+        public static Player GetPlayer(int idx) { return Players.ElementAt(idx); }
+
+
         public static int GetPlayerIndexByName(string name)
         {
-            var  player = Players.Where(x => x.Name == name).FirstOrDefault();
+            var player = Players.Where(x => x.Name == name).FirstOrDefault();
             return Players.IndexOf(player);
         }
 
@@ -26,6 +28,13 @@ namespace Assets.Scipts
         {
             var player = Players.Where(x => x.Name == name).FirstOrDefault();
             player.AddExp(exp);
+        }
+
+
+
+        public static void AddItemToSpaceshipInventory(string name, GameObject item)
+        {
+
         }
     }
 }
