@@ -7,14 +7,14 @@ public class MinersMeshLibrary : MonoBehaviour
     [SerializeField]
     List<MeshFilter> _Meshes = new List<MeshFilter>();
     public static List<MeshFilter> Meshes = new List<MeshFilter>();
-    void Start()
+    void Awake()
     {
         Meshes = _Meshes;
     }
 
-    public static MeshFilter GetMeshByLvl(int lvl)
+    public static Mesh GetMeshByLvl(int lvl)
     {
-        return Meshes[lvl - 1];
+        return Meshes[lvl - 1].mesh;
     }
 
 

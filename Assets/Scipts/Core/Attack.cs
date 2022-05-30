@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
-    bool readyToShoot = true;
-    bool isShooting = false;
-    Transform target;
-    public Transform Spaceship;
-    int minerIndex = -1;
+    public LineRenderer ShootingEffect;
 
-    public LineRenderer lineRenderer;
+    Transform target;// to get coordinates for draw shoot visual effect
+    public Transform Spaceship; // to get coordinates for draw shoot visual effect
+    int minerIndex = -1; //miner to attack
+
+    public static bool readyToShoot = true;
+    public static bool isShooting = false;
 
     void Start()
     {
-        lineRenderer.gameObject.SetActive(false);
+        ShootingEffect.gameObject.SetActive(false);
     }
 
     void Update()
@@ -22,10 +23,10 @@ public class Attack : MonoBehaviour
         if (isShooting)
         {
             var spaceshipPosition = Spaceship.transform.position;
-            lineRenderer.SetPosition(0, spaceshipPosition);
+            ShootingEffect.SetPosition(0, spaceshipPosition);
 
             var enemyPosition = target.position;
-            lineRenderer.SetPosition(1, enemyPosition);
+            ShootingEffect.SetPosition(1, enemyPosition);
         }
     }
 
@@ -38,18 +39,18 @@ public class Attack : MonoBehaviour
             {
 
                 minerIndex = MinersOnMap.GetMinerId(other.transform.parent.name); //name: EnemyLVL1
-                var saveIndex = minerIndex;//save if allready shooted but core is out of attack range and miner index sets -1
+                var saveMinerIndex = minerIndex;//save if allready shooted but core is out of attack range and miner index sets -1
 
                 readyToShoot = false;
                 isShooting = true;
                 target = other.transform;
-                lineRenderer.gameObject.SetActive(true);
+                ShootingEffect.gameObject.SetActive(true);
 
                 yield return new WaitForSeconds(1.2f); //shooting for 1.2 sec
                 string AttackerName = transform.parent.name;
-                MinersOnMap.Damage(saveIndex, AttackerName, 29);
+                MinersOnMap.Damage(saveMinerIndex, AttackerName, 13);
 
-                lineRenderer.gameObject.SetActive(false);
+                ShootingEffect.gameObject.SetActive(false);
                 isShooting = false;
 
                 yield return new WaitForSeconds(2.1f); //reload
@@ -58,18 +59,15 @@ public class Attack : MonoBehaviour
         }
     }
 
-
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Miner"))
         {
-            lineRenderer.gameObject.SetActive(false);
+            ShootingEffect.gameObject.SetActive(false);
             minerIndex = -1;
             readyToShoot = true;
             isShooting = false;
         }
     }
-
-
 
 }

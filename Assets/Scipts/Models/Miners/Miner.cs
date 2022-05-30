@@ -12,7 +12,7 @@ namespace Assets.Scipts.Models.Miners
 
         public string Id { get; set; }
         public int Lvl;
-        protected float MoveSpeed;
+        public float MoveSpeed;
         public int MaxHealth;
         public int CurrentHealth;
         public int Exp;
