@@ -1,33 +1,39 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scipts.Models.Miners
 {
     public abstract class Miner
     {
-        public HealthBar healthBar;
-        public string Id { get; set; }
         public GameObject minerGameObject;
-        public int MaxHealth { get; set; }
-        public int CurrentHealth { get; set; }
+
+        //public HealthBar healthBar;
+        public HealthBar HealthBar; 
+
+        public string Id { get; set; }
+        public int Lvl;
+        protected float MoveSpeed;
+        public int MaxHealth;
+        public int CurrentHealth;
+        public int Exp;
+        public int DamageAmount;
+
         public Transform transform { get; set; }
-        float moveSpeed = 0.4f;
-        public HealthBar HealthBar { get; set; } //remove
         public bool canFollow = false;
+
         protected List<Item> dropItems = new List<Item>();
 
 
-        public void SetMaxHealth(int h)
+        public void SetMaxHealth(int health)
         {
-            MaxHealth = h;
-            CurrentHealth = h;
+            MaxHealth = health;
+            CurrentHealth = health;
         }
 
         public void Damage(string damagedBy, int dmg)
         {
             CurrentHealth -= dmg;
-            healthBar.SetHealth(CurrentHealth);
+            HealthBar.SetHealth(CurrentHealth);
             if (CurrentHealth <= 0)
             {
                 destroy();
@@ -69,16 +75,14 @@ namespace Assets.Scipts.Models.Miners
             SpriteRenderer renderer = drop.AddComponent<SpriteRenderer>();
             renderer.sprite = dropItems[0].Image;
 
-            BotLvl1.DropItemsAfterDeath(drop, minerPOsition);
+            MinerBot.DropItemsAfterDeath(drop, minerPOsition);
         }
 
-         
-      
 
         public void Follow(Vector3 targetPosition)
         {
             transform.position = Vector3.MoveTowards(transform.position,
-                targetPosition, moveSpeed * Time.deltaTime);
+                targetPosition, MoveSpeed * Time.deltaTime);
         }
     }
 }

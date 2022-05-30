@@ -1,26 +1,39 @@
 using Assets;
 using Assets.Scipts.Models.Miners;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class BotLvl1 : MonoBehaviour
+public class MinerBot : MonoBehaviour
 {
     public HealthBar healthBar;
     private Transform target;
     public GameObject thisBot;
     private Vector3 vectorWithNoZ;
-    public float speed = 1f;
     public static bool canFollow = false;
+    [SerializeField] UnityEngine.UI.Text levelTextAboveMiner;
 
-    private int currentHealth = 100;
     int minerIdx;
 
     void Start()
     {
-        MinerLvl1 miner = new MinerLvl1(healthBar);
+        Miner miner;
+        System.Random r = new System.Random();
+        int rand = r.Next(1, 4); // for  spawn random level bots
+        if (rand == 3) //1 to 4 change to spawn lvl 2 bot
+        {
+            miner = new MinerLvl2(healthBar);
+            levelTextAboveMiner.text += "Miner Bot LVL 2";
+        }
+        else
+        {
+            miner = new MinerLvl1(healthBar);
+            levelTextAboveMiner.text += "Miner Bot LVL 1";
+        }
+
         miner.Id = thisBot.name;
         miner.transform = thisBot.transform; //EnemyLVL1
         miner.minerGameObject = thisBot;
-        miner.healthBar = this.healthBar;
+        miner.HealthBar = this.healthBar;
         MinersOnMap.Miners.Add(miner);
 
         target = thisBot.transform;
@@ -28,20 +41,20 @@ public class BotLvl1 : MonoBehaviour
 
     void Update()
     {
-        //if (canFollow)
-        //{
-        //    try
-        //    {
-        //        vectorWithNoZ = target.position;
-        //    }
-        //    catch
-        //    {
-        //    }
-        //    MinersOnMap.Follow(minerIdx, vectorWithNoZ);
-        //}
+        if (canFollow)
+        {
+            vectorWithNoZ = target.position;
+            //thisBot.transform.position = Vector3.MoveTowards(transform.position, vectorWithNoZ, speed * Time.deltaTime);
+            MinersOnMap.Follow(minerIdx, vectorWithNoZ);
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Player"))
+        {
+            canFollow = true;
+            target = other.transform;
+        }
         minerIdx = MinersOnMap.GetMinerId(thisBot.name);
     }
 
@@ -50,8 +63,7 @@ public class BotLvl1 : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            vectorWithNoZ = target.position;
-            MinersOnMap.Follow(minerIdx, vectorWithNoZ);
+            //MinersOnMap.Follow(minerIdx, vectorWithNoZ);
         }
     }
 

@@ -30,7 +30,6 @@ public class PickUpItem : MonoBehaviour
     {
         ItemsOnMap.Remove(ItemName);
         var item = GameObject.Find(ItemName);
-        Debug.Log("picked up " + item.name);
         InventoryPanel.AddItem(item);
         Destroy(item);
     }
