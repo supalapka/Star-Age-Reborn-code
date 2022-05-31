@@ -1,7 +1,5 @@
 using Assets.Scipts.Models;
 using Assets.Scipts.Models.Miners;
-using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class Attack : MonoBehaviour
@@ -44,29 +42,28 @@ public class Attack : MonoBehaviour
         {
             if (weapon.IsReadyToShoot)
             {
+                weapon.IsReadyToShoot = false;
+                weapon.IsShooting = true;
 
-                minerIndex = MinersOnMap.GetMinerId(other.transform.parent.name); //name: EnemyLVL1
+
+                string minerid = other.transform.parent.name;
+                minerIndex = MinersOnMap.GetMinerIndex(minerid); //name: EnemyLVL1
                 var saveMinerIndex = minerIndex;//save if allready shooted but core is out of attack range and miner index sets -1
 
                 ShootingEffect.gameObject.SetActive(true);
 
-                weapon.IsReadyToShoot = false;
-                weapon.IsShooting = true;
                 target = other.transform;
 
-                // new WaitForSeconds(weapon.ShootingTime); //shooting for 1.2 sec
-                weapon.IsReloading = true;
-                await weapon.Shooting();//shooting for 1.2 sec
+                await weapon.Shooting();//shooting delay for 1.2 sec
 
                 string AttackerName = transform.parent.name; //if killed then add exp to attacker
-                if(ShootingEffect.gameObject.activeSelf) //fix bug where damagind when attack ended
-                MinersOnMap.Damage(saveMinerIndex, AttackerName, weapon.DamageAmount);
+                if (ShootingEffect.gameObject.activeSelf) //fix bug where damagind when attack ended
+                    MinersOnMap.Damage(saveMinerIndex, AttackerName, weapon.DamageAmount);
 
                 ShootingEffect.gameObject.SetActive(false);
                 weapon.IsShooting = false;
 
-                // yield return new WaitForSeconds(weapon.ReloadTime); //reload
-                // weapon.IsReadyToShoot = true;
+                weapon.IsReloading = true;
                 await weapon.Reload();
             }
         }
@@ -82,16 +79,17 @@ public class Attack : MonoBehaviour
                 weapon.IsReloading = true;
                 await weapon.Reload();
                 weapon.IsShooting = false;
-            }else
+            }
+            else
             {
                 ShootingEffect.gameObject.SetActive(false);
-                if(!weapon.IsReloading) //if reloading then not ready to shoot
-                weapon.IsReadyToShoot = true;
+                if (!weapon.IsReloading) //if reloading then not ready to shoot
+                    weapon.IsReadyToShoot = true;
                 weapon.IsShooting = false;
             }
 
             minerIndex = -1;
-           
+
         }
     }
 

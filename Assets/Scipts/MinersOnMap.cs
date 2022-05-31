@@ -13,7 +13,7 @@ namespace Assets.Scipts.Models.Miners
             Miners.ElementAt(index).Damage(damagedBy, damage);
         }
 
-        public static int GetMinerId(string id)
+        public static int GetMinerIndex(string id)
         {
             int index = 0;
             foreach (var miner in Miners)

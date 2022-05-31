@@ -45,29 +45,17 @@ public class MinerBot : MonoBehaviour
 
     void Update()
     {
-        //foreach (var miner in MinersOnMap.Miners)
-        //{
-        //    if (miner.canFollow)
-        //    miner.Follow(target.position);
-        //}
-
         if (canFollow)
-        {
             thisBot.transform.position = Vector3.MoveTowards(thisBot.transform.position, target.position, speed * Time.deltaTime);
-        //    MinersOnMap.Follow(minerIdx, target.position);
-            //miner.Follow(target.position);
-        }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            minerIdx = MinersOnMap.GetMinerId(this.name);
-            //   MinersOnMap.Miners[minerIdx].canFollow = true;
             canFollow = true;
             target = other.transform;
         }
-        minerIdx = MinersOnMap.GetMinerId(thisBot.name);
     }
 
 
