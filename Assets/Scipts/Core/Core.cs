@@ -1,6 +1,8 @@
 using Assets.Scipts.Model;
 using Assets.Scipts.Model.Engines;
+using Assets.Scipts.Models;
 using Assets.Scipts.Models.Spaceships;
+using Assets.Scipts.Models.Weapons;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +15,11 @@ public static class Core
     {
         Engine tesla = new Tesla();
         spaceship.Engines.Add(tesla);
-        isInited = true;
 
+        Weapon weapon = new TestWeapon();
+        spaceship.Weapon.Add(weapon);
+
+        isInited = true;
     }
-    
+
 }

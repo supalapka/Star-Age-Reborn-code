@@ -26,7 +26,7 @@ namespace Assets.Scipts.Models.Spaceships
         public int InventorySize;
 
         public List<Engine> Engines = new List<Engine>();
-        // public List<Weapon> Weapon;
+        public List<Weapon> Weapon = new List<Weapon>();
 
         public Spaceship(string name,
             int hp,
