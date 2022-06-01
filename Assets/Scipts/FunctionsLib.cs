@@ -12,4 +12,6 @@ namespace Assets
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
+
+
 }

@@ -76,7 +76,7 @@ namespace Assets.Scipts.Models.Miners
             renderer.sprite = dropItems[0].Image;
 
             drop.transform.position = minerPOsition;
-
+            ItemsOnMap.Add(drop);
         }
 
 

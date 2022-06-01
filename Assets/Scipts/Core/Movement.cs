@@ -54,6 +54,7 @@ public class Movement : MonoBehaviour
             if(PickUpItem.IsPickingUpItem == true)
             {
                 PickUpItem.PickUp();
+                PickUpItem.IsPickingUpItem = false;
             }
         }
     }
