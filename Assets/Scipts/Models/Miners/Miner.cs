@@ -75,7 +75,8 @@ namespace Assets.Scipts.Models.Miners
             SpriteRenderer renderer = drop.AddComponent<SpriteRenderer>();
             renderer.sprite = dropItems[0].Image;
 
-            MinerBot.DropItemsAfterDeath(drop, minerPOsition);
+            drop.transform.position = minerPOsition;
+
         }
 
 

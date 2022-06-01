@@ -65,12 +65,4 @@ public class MinerBot : MonoBehaviour
             canFollow = false;
     }
 
-    public static void DropItemsAfterDeath(GameObject drop, Vector3 position)
-    {
-        Quaternion rotation = Quaternion.identity;
-        ItemsOnMap.Add(drop);
-        Instantiate(drop, position, rotation);
-
-    }
-
 }
