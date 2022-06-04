@@ -9,16 +9,17 @@ public class MinerBot : MonoBehaviour
     private Transform target;
     public GameObject thisBot;
     private float speed;
-    private Vector3 vectorWithNoZ;
     public bool canFollow = false;
     [SerializeField] Text levelTextAboveMiner;
     [SerializeField] MeshFilter MinerMesh;
 
     Miner miner;
-    int minerIdx;
 
     void Start()
     {
+        if (!MinersOnMap.IsInited)
+            MinersOnMap.Init(thisBot);
+
         System.Random r = new System.Random();
         int rand = r.Next(0, 4); // for  spawn random level bots
         if (rand == 3) //1 to 4 change to spawn lvl 2 bot
