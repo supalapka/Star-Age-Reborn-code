@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Movement : MonoBehaviour
     public List<GameObject> flames;
     [SerializeField] private Collider targetCollider;
     private Vector3 target;
+    private bool isLanding = false;
     void Start()
     {
         if (!Core.isInited)
@@ -44,6 +46,17 @@ public class Movement : MonoBehaviour
         {
             target = coreTransform.transform.position;
         }
+
+        if (isLanding)
+        {
+            coreTransform.transform.localScale = Vector3.Lerp(coreTransform.transform.localScale, Vector3.zero, 1.2f * Time.deltaTime);
+            if (coreTransform.transform.localScale.y < 0.04f)
+            {
+                isLanding = false;
+                SceneManager.LoadScene("Base");
+            }
+
+            }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -51,10 +64,17 @@ public class Movement : MonoBehaviour
         if (other == targetCollider) 
         {
             target = coreTransform.transform.position;
-            if(PickUpItem.IsPickingUpItem == true)
+
+            if(PickUpItem.IsPickingUpItem) //pick up item
             {
                 PickUpItem.PickUp();
                 PickUpItem.IsPickingUpItem = false;
+            }
+
+            if (PlanetLanding.IsMovesToLanding) //land spaceship
+            {
+                PlanetLanding.IsMovesToLanding = false;
+                isLanding = true; 
             }
         }
     }
