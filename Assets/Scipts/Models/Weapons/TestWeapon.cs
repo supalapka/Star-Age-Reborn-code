@@ -11,9 +11,9 @@ namespace Assets.Scipts.Models.Weapons
         public TestWeapon()
         {
             Name = "TestWeapon";
-            DamageAmount = 40;
-            ShootingTime = 2f;
-            ReloadTime = 5f;
+            DamageAmount = 15;
+            ShootingTime = 0.7f;
+            ReloadTime = 1.1f;
         }
     }
 }

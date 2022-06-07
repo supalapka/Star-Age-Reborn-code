@@ -32,7 +32,7 @@ namespace Assets.Scipts
 
 
 
-        public static void AddItemToSpaceshipInventory(string name, GameObject item)
+        public static void AddItemToSpaceshipInventory(string name, UnityEngine.GameObject item)
         {
 
         }

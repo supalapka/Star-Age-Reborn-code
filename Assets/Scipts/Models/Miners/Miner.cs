@@ -5,7 +5,7 @@ namespace Assets.Scipts.Models.Miners
 {
     public abstract class Miner
     {
-        public GameObject minerGameObject;
+        public UnityEngine.GameObject minerGameObject;
 
         //public HealthBar healthBar;
         public HealthBar HealthBar; 
@@ -53,7 +53,7 @@ namespace Assets.Scipts.Models.Miners
         private void dropLoot(Vector3 minerPOsition)
         {
             //drop settings
-            var drop = new GameObject();
+            var drop = new UnityEngine.GameObject();
             var codename = FunctionsLib.RandomString(6);
             drop.name = dropItems[0].name + codename;
 

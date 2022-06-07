@@ -47,7 +47,7 @@ public class Attack : MonoBehaviour
 
 
                 string minerid = other.transform.parent.name;
-                minerIndex = MinersOnMap.GetMinerIndex(minerid); //name: EnemyLVL1
+                minerIndex = MinersOnMap.GetMinerIndex(minerid); 
                 var saveMinerIndex = minerIndex;//save if allready shooted but core is out of attack range and miner index sets -1
 
                 ShootingEffect.gameObject.SetActive(true);

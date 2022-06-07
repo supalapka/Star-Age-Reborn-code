@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Explode : MonoBehaviour
 {
-    public GameObject Miner;
-    public GameObject Explosion;
+    public UnityEngine.GameObject Miner;
+    public UnityEngine.GameObject Explosion;
 
 
     void OnTriggerEnter(Collider other)

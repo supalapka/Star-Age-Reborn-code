@@ -29,7 +29,7 @@ public class PickUpItem : MonoBehaviour
     public static void PickUp()
     {
         ItemsOnMap.Remove(ItemName);
-        var item = GameObject.Find(ItemName);
+        var item = UnityEngine.GameObject.Find(ItemName);
         InventoryPanel.AddItem(item);
         Destroy(item);
     }

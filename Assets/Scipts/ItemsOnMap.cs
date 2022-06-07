@@ -6,7 +6,7 @@ namespace Assets
 {
     public static class ItemsOnMap
     {
-        public static List<GameObject> Items = new List<GameObject>();
+        public static List<UnityEngine.GameObject> Items = new List<UnityEngine.GameObject>();
 
         public static void Remove(string itemName)
         {
@@ -14,7 +14,7 @@ namespace Assets
             Items.Remove(removeItem);
         }
 
-        public static void Add(GameObject item) { Items.Add(item); }
+        public static void Add(UnityEngine.GameObject item) { Items.Add(item); }
 
     }
 }

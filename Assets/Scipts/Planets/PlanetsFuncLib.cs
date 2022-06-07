@@ -11,7 +11,7 @@ namespace Assets.Scipts.Planets
         public static List<KeyValuePair<string,float>> PlanetSpeed = new List<KeyValuePair<string, float>>();
         public static bool IsInited = false;
 
-        private static float slower = 1000f;
+        private static float slower = 100f;
 
         public static float GetPlanetSpeed(string name)
         {

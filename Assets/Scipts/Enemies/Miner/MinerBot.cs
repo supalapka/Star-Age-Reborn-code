@@ -7,7 +7,7 @@ public class MinerBot : MonoBehaviour
 {
     public HealthBar healthBar;
     private Transform target;
-    public GameObject thisBot;
+    public UnityEngine.GameObject thisBot;
     private float speed;
     public bool canFollow = false;
     [SerializeField] Text levelTextAboveMiner;

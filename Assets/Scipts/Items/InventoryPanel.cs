@@ -17,7 +17,7 @@ namespace Assets.Scipts.Items
             if (Input.GetKeyDown(KeyCode.E)) //add item to inventory test
             {
                 var item = GameInventoryItems.AllItems[0];
-                var icon = new GameObject("SlotBox");
+                var icon = new UnityEngine.GameObject("SlotBox");
                 icon.AddComponent<Image>().sprite = item.Image;
 
                 var player = PlayersOnMap.GetPlayer(0); //fix later
@@ -25,12 +25,12 @@ namespace Assets.Scipts.Items
             }
         }
 
-        public static void AddItem(GameObject _item)
+        public static void AddItem(UnityEngine.GameObject _item)
         {
             var player = PlayersOnMap.GetPlayer(0); //fix later
 
             var item = GameInventoryItems.AllItems.Where(x => _item.name.Contains(x.name)).FirstOrDefault();
-            var icon = new GameObject(item.name + "SlotBox");
+            var icon = new UnityEngine.GameObject(item.name + "SlotBox");
             icon.AddComponent<Image>().sprite = item.Image;
             icon.transform.SetParent(player.ItemsPanel);  //fix later
         }
@@ -40,7 +40,7 @@ namespace Assets.Scipts.Items
             var player = PlayersOnMap.GetPlayer(0); //fix later
             foreach (var item in player._Inventory.GetSlotsBoxes())
             {
-                var icon = new GameObject("SlotBox");
+                var icon = new UnityEngine.GameObject("SlotBox");
                 icon.AddComponent<Image>().sprite = item.Image;
                 icon.transform.SetParent(player.SlotViewPanel);
                 icon.transform.localScale = Vector3.one; //reset scale cause its breaks
