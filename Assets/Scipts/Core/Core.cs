@@ -19,6 +19,8 @@ public static class Core
         Weapon weapon = new TestWeapon();
         spaceship.Weapon.Add(weapon);
 
+        spaceship.SpaceshipMesh = SpaceshipsMeshesList.GetSpaceshipByName(spaceship.Name);
+
         isInited = true;
     }
 

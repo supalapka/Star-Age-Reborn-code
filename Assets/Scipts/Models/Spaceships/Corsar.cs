@@ -8,9 +8,10 @@ namespace Assets.Scipts.Models.Spaceships
 {
     public class Corsar : Spaceship
     {
-        public Corsar() : base("Corsar",500, 2, 3, 1, 3, 2, 1, 50)
+        
+        public Corsar() : base("Attacker", 500, 2, 3, 1, 3, 2, 1, 50)
         {
-
+           // SpaceshipMesh = SpaceshipsMeshesList.GetSpaceshipByName("Corsar");
         }
     }
 }

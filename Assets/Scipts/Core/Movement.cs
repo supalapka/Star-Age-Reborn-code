@@ -4,16 +4,21 @@ using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
-    public Transform coreTransform;
-    private float moveSpeed = 0;
+    public Transform coreTransform; // this spaceship
+
+    [SerializeField] GameObject SpaceshipModel; 
+    bool isSpaceshipModelActive = false;
+
+    private float moveSpeed;
     public List<GameObject> flames;
     [SerializeField] private Collider targetCollider;
-    private Vector3 target;
-    private bool isLanding = false;
+    private Vector3 target; //target to move
+    private bool isLanding = false; //is landing on planet
     void Start()
     {
         if (!Core.isInited)
             Core.Init();
+
         target = coreTransform.transform.position;
         foreach (var engine in Core.spaceship.Engines)
             moveSpeed += engine.MoveSpeed;
@@ -54,18 +59,38 @@ public class Movement : MonoBehaviour
             {
                 isLanding = false;
                 SceneManager.LoadScene("Base");
-            }
 
             }
+
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other == targetCollider) 
+
+        if (!isSpaceshipModelActive) //set spaceship mesh to player //redo later;
+        {
+            isSpaceshipModelActive = true;
+            var model = Instantiate(Core.spaceship.SpaceshipMesh, SpaceshipModel.transform.parent);
+            SpaceshipModel.SetActive(false);
+
+            model.SetActive(true);
+           // model.transform.position = Vector3.zero;
+
+            flames.Clear();
+            foreach (Transform flame in model.transform)
+            {
+                flame.transform.localScale = new Vector3(.1f, .1f, .1f);
+                flames.Add(flame.gameObject);
+            }
+
+        }
+
+        if (other == targetCollider)
         {
             target = coreTransform.transform.position;
 
-            if(PickUpItem.IsPickingUpItem) //pick up item
+            if (PickUpItem.IsPickingUpItem) //pick up item
             {
                 PickUpItem.PickUp();
                 PickUpItem.IsPickingUpItem = false;
@@ -74,7 +99,7 @@ public class Movement : MonoBehaviour
             if (PlanetLanding.IsMovesToLanding) //land spaceship
             {
                 PlanetLanding.IsMovesToLanding = false;
-                isLanding = true; 
+                isLanding = true;
             }
         }
     }

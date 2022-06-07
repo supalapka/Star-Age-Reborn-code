@@ -1,15 +1,13 @@
 ﻿using Assets.Scipts.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scipts.Models.Spaceships
 {
     public class Spaceship
     {
         public readonly string Name;
+        public GameObject SpaceshipMesh;
 
         public readonly int MaxHP;
         public readonly int CurrentHP;
@@ -48,6 +46,15 @@ namespace Assets.Scipts.Models.Spaceships
             WeaponCount = weaponCount;
             EngineCount = engineCount;
             InventorySize = inventorySize;
+        }
+
+        public void SetSpaceshipMesh(ref GameObject obj) //redo later
+        {
+            // SpaceshipMesh.transform.position = obj.transform.position;
+
+            //obj.GetComponent<MeshFilter>().mesh = SpaceshipMesh.GetComponent<MeshFilter>().mesh;
+
+
         }
 
     }
